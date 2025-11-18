@@ -21,55 +21,83 @@ Before making any architectural or implementation decisions, reference the appro
 
 ### 2. Prompt File Reference Map
 
-**For Architecture Decisions:**
-- `code-structure.md` - Universal architecture patterns and organization
-- `modular-architecture-principles.md` - Right-sized modularity approaches
-- `feature-extensibility.md` - Building systems that can grow and evolve
-- `asset-reusability.md` - Resource management and DRY principles for assets
+**Core Principles (Platform-Agnostic):**
 
-**For Implementation:**
-- `firebase-best-practices.md` - Firebase-specific implementation patterns
-- `security-architecture.md` - Security patterns and defensive practices
-- `testing-qa.md` - Testing strategies and quality assurance
+Architecture:
+- `core/architecture/code-structure.md` - Universal architecture patterns and organization
+- `core/architecture/modular-architecture-principles.md` - Right-sized modularity approaches
+- `core/architecture/feature-extensibility.md` - Building systems that can grow and evolve
 
-**For Operations:**
-- `deployment-cicd.md` - Deployment automation and CI/CD practices
-- `monitoring-observability.md` - System monitoring and performance tracking
-- `budget-resilience.md` - Cost management and system resilience
-- `finops-free-tier-maximization.md` - Optimizing for free tier services
-- `platform-simplification.md` - Platform selection and simplification
+Development:
+- `core/development/asset-reusability.md` - Resource management and DRY principles
+- `core/development/git-best-practices.md` - Git workflows, commit conventions, branching strategies
 
-**For Version Control:**
-- `git-best-practices.md` - Git workflows, commit conventions, and branching strategies
+Security & Testing:
+- `core/security/security-principles.md` - Security patterns and defensive practices
+- `core/testing/testing-principles.md` - Testing strategies and quality assurance
 
-**For Maintenance:**
-- `prompt-maintenance.md` - Keeping prompt library current and accurate
+Deployment & Operations:
+- `core/deployment/deployment-principles.md` - CI/CD patterns and deployment strategies
+- `core/operations/monitoring-principles.md` - Observability and performance tracking
+- `core/operations/budget-principles.md` - Cost management and resilience patterns
+- `core/operations/platform-simplification-principles.md` - Platform selection and simplification
+
+**Firebase Implementation (Platform-Specific):**
+- `platforms/firebase/firebase-best-practices.md` - Firebase SDK patterns and fundamentals
+- `platforms/firebase/firebase-security.md` - Firestore rules, App Check, custom claims
+- `platforms/firebase/firebase-testing.md` - Emulator usage, security rules testing
+- `platforms/firebase/firebase-deployment.md` - GitHub Actions, Hosting, Functions deployment
+- `platforms/firebase/firebase-monitoring.md` - Performance Monitoring, Analytics, Cloud Logging
+- `platforms/firebase/firebase-finops.md` - Free tier maximization and cost optimization
+- `platforms/firebase/firebase-resilience.md` - Error handling, retry patterns
+- `platforms/firebase/firebase-platform-guide.md` - Firebase + GitHub strategy
+
+**Meta-Guidance:**
+- `meta/prompt-maintenance.md` - Keeping prompt library current and accurate
 
 ## Decision Framework
 
 ### When to Reference Which Prompt
 
-**Adding New Features** → `modular-architecture-principles.md` + `feature-extensibility.md`
+**Adding New Features** →
+- `core/architecture/modular-architecture-principles.md` + `core/architecture/feature-extensibility.md`
+- Then: `platforms/firebase/firebase-best-practices.md` for implementation
 
-**Refactoring Code** → `code-structure.md` + `modular-architecture-principles.md`
+**Refactoring Code** →
+- `core/architecture/code-structure.md` + `core/architecture/modular-architecture-principles.md`
 
-**Working with Assets/Resources** → `asset-reusability.md` + `code-structure.md`
+**Working with Assets/Resources** →
+- `core/development/asset-reusability.md` + `core/architecture/code-structure.md`
 
-**Security Implementation** → `security-architecture.md`
+**Security Implementation** →
+- `core/security/security-principles.md` (universal patterns)
+- Then: `platforms/firebase/firebase-security.md` (Firebase implementation)
 
-**Performance Optimization** → `monitoring-observability.md` + `budget-resilience.md`
+**Performance Optimization** →
+- `core/operations/monitoring-principles.md` + `core/operations/budget-principles.md`
+- Then: `platforms/firebase/firebase-monitoring.md` + `platforms/firebase/firebase-resilience.md`
 
-**Testing Strategy** → `testing-qa.md`
+**Testing Strategy** →
+- `core/testing/testing-principles.md` (universal testing)
+- Then: `platforms/firebase/firebase-testing.md` (Firebase emulator, rules testing)
 
-**Deployment Planning** → `deployment-cicd.md`
+**Deployment Planning** →
+- `core/deployment/deployment-principles.md` (CI/CD patterns)
+- Then: `platforms/firebase/firebase-deployment.md` (GitHub Actions setup)
 
-**Cost Management** → `finops-free-tier-maximization.md` + `budget-resilience.md`
+**Cost Management** →
+- `core/operations/budget-principles.md` (universal FinOps)
+- Then: `platforms/firebase/firebase-finops.md` + `platforms/firebase/firebase-resilience.md`
 
-**Technology Selection** → `platform-simplification.md` + relevant technology-specific prompts
+**Technology Selection** →
+- `core/operations/platform-simplification-principles.md`
+- Then: `platforms/firebase/firebase-platform-guide.md` for Firebase strategy
 
-**Version Control & Commits** → `git-best-practices.md`
+**Version Control & Commits** →
+- `core/development/git-best-practices.md`
 
-**Prompt Library Updates** → `prompt-maintenance.md`
+**Prompt Library Updates** →
+- `meta/prompt-maintenance.md`
 
 ## Core Working Principles
 
