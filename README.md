@@ -139,7 +139,7 @@ Opens your deployed site in the browser.
   - HTML files: 1 hour cache with revalidation
 - **Security Headers**: XSS protection, clickjacking prevention
 - **SPA Routing**: All routes serve `index.html` for single-page app behavior
-- **Preview Channels**: Test deployments before going live
+- **Preview Channels**: Test deployments before going live (auto-expire after 7 days)
 
 ### Firebase Free Tier Limits
 
