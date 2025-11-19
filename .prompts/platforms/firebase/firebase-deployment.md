@@ -1,14 +1,23 @@
-# Deployment & CI/CD Prompt for Firebase Applications
+# Firebase Deployment & CI/CD Implementation
 
-> **Last Updated:** 2025-11-08
-> **GitHub Actions:** actions/checkout@v4, actions/setup-node@v4
-> **Node.js:** 24 LTS (Active until April 2028)
-> **Authentication:** Service Account (CI tokens deprecated)
-> **Next Review:** 2026-02-08
+**Status**: Firebase-Specific
+**Last Updated**: 2025-11-18
+**GitHub Actions**: actions/checkout@v4, actions/setup-node@v4
+**Node.js**: 24 LTS (Active until April 2028)
+**Authentication**: Service Account (CI tokens deprecated)
+**Core Principles**: See [../../core/deployment/deployment-principles.md](../../core/deployment/deployment-principles.md)
 
-## Modern CI/CD Pipeline Architecture
+## Overview
 
-When implementing deployment strategies for this Firebase application, follow these well-architected patterns for automated, secure, and reliable deployments. **For free tier CI/CD**, see `finops-free-tier-maximization.md` for GitHub Actions optimization and free deployment strategies.
+Firebase-specific CI/CD implementation using GitHub Actions, Firebase Hosting, Cloud Functions, and Firestore deployment.
+
+For universal CI/CD principles (deployment strategies, pipeline stages, best practices), see the [Core Deployment Principles](../../core/deployment/deployment-principles.md) guide.
+
+---
+
+## Firebase CI/CD Pipeline Architecture
+
+When implementing deployment strategies for this Firebase application, follow these patterns for automated, secure, and reliable deployments. **For free tier optimization**, see [firebase-finops.md](./firebase-finops.md).
 
 > 💰 **Cost-Optimized CI/CD**: Prioritize Firebase Hosting free tier deployment, optimize GitHub Actions runtime, and use free monitoring services.
 
@@ -408,6 +417,79 @@ jobs:
 
               This preview will expire in 7 days.`
             })
+```
+
+#### 3. Preview Channel Lifecycle Management
+
+**Firebase Auto-Expiration (Recommended)**
+
+Firebase Hosting automatically expires and removes preview channels after their configured duration. For most applications, relying on this native behavior is the simplest and most reliable approach:
+
+```yaml
+# .github/workflows/deploy-preview.yml
+- name: Deploy to Firebase Preview Channel
+  uses: FirebaseExtended/action-hosting-deploy@v0
+  with:
+    expires: 7d  # Firebase automatically removes after 7 days
+```
+
+**When to Use Manual Cleanup:**
+
+Manual cleanup is only necessary when:
+1. You need to remove channels **before** their expiration time
+2. You're implementing custom blue-green deployment flows that create many temporary channels
+3. You have specific compliance requirements for immediate resource deletion
+
+**When to Avoid Manual Cleanup:**
+
+❌ **Do NOT create scheduled cleanup workflows** when:
+- Preview channels already have expiration configured
+- You're within hosting platform's resource limits
+- Channels expire automatically within acceptable timeframes
+
+This follows platform simplification principles by trusting native platform behavior rather than adding custom automation.
+
+**Manual Cleanup Example (Only if needed):**
+
+```bash
+# Inline cleanup as part of deployment promotion
+if [ "$PROMOTE" = "true" ]; then
+  # Cleanup old preview channels after successful promotion
+  firebase hosting:channel:list --json | \
+    jq -r '.[] | select(.expireTime < now) | .name' | \
+    xargs -I {} firebase hosting:channel:delete {}
+fi
+```
+
+**❌ Anti-Pattern: Scheduled Cleanup Workflows**
+
+```yaml
+# ❌ AVOID: Unnecessary scheduled cleanup
+# .github/workflows/cleanup-previews.yml
+name: Cleanup Preview Channels
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly cleanup
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: firebase hosting:channel:list
+      # Firebase already handles this automatically!
+```
+
+**Why this is problematic:**
+- Adds operational complexity (scheduled job management)
+- Creates unnecessary failure points
+- Duplicates hosting platform's native auto-expiration
+- Wastes CI/CD minutes
+- Violates platform simplification principles
+
+**✅ Better Approach:**
+
+Configure expiration when creating preview channels and trust the platform's auto-cleanup:
+```yaml
+expires: 7d  # Platform automatically handles cleanup
 ```
 
 ### Environment Management

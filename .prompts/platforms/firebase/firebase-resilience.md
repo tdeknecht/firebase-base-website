@@ -1,8 +1,20 @@
-# Budget-Friendly Resilience Prompt for Firebase Applications
+# Firebase Resilience Implementation
 
-## Cost-Effective Resilience Architecture
+**Status**: Firebase-Specific
+**Last Updated**: 2025-11-18
+**Core Principles**: See [../../core/operations/budget-principles.md](../../core/operations/budget-principles.md)
 
-When building resilient Firebase applications on a budget, focus on single-region, multi-availability zone patterns with smart error handling and graceful degradation. **Note**: For zero-cost architecture, refer to `finops-free-tier-maximization.md` for comprehensive free tier strategies.
+## Overview
+
+Firebase-specific resilience patterns for budget-friendly, reliable applications using Firebase services.
+
+For universal budget and resilience principles, see the [Core Budget Principles](../../core/operations/budget-principles.md) guide.
+
+---
+
+## Firebase Cost-Effective Resilience Architecture
+
+When building resilient Firebase applications on a budget, focus on single-region, multi-availability zone patterns with smart error handling and graceful degradation. **For zero-cost strategies**, see [firebase-finops.md](./firebase-finops.md).
 
 > 💡 **Free Tier First**: Before implementing any paid resilience patterns, ensure you've maximized all available free tier services and quotas outlined in the FinOps prompt.
 

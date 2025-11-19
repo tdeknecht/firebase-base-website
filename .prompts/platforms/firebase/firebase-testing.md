@@ -1,13 +1,22 @@
-# Testing & Quality Assurance Prompt for Firebase Applications
+# Firebase Testing Implementation
 
-> **Last Updated:** 2025-11-08
-> **Testing Libraries:** @testing-library/react v14+, jest v29+, playwright v1.40+
-> **Node.js:** 24 LTS
-> **Next Review:** 2026-02-08
+**Status**: Firebase-Specific
+**Last Updated**: 2025-11-18
+**Testing Libraries**: @testing-library/react v14+, jest v29+, playwright v1.40+
+**Node.js**: 24 LTS
+**Core Principles**: See [../../core/testing/testing-principles.md](../../core/testing/testing-principles.md)
 
-## Comprehensive Testing Strategy
+## Overview
 
-When implementing testing for this Firebase application, follow these well-architected testing patterns for quality assurance, security validation, and reliability:
+Firebase-specific testing implementation including Firebase Emulator usage, Firestore Security Rules testing, Firebase Auth testing, and Cloud Functions testing.
+
+For universal testing principles (testing pyramid, best practices, test organization), see the [Core Testing Principles](../../core/testing/testing-principles.md) guide.
+
+---
+
+## Comprehensive Testing Strategy for Firebase
+
+When implementing testing for this Firebase application, follow these patterns for quality assurance, security validation, and reliability:
 
 ### Testing Pyramid Architecture
 

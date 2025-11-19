@@ -1,8 +1,20 @@
-# Monitoring & Observability Prompt for Firebase Applications
+# Firebase Monitoring & Observability Implementation
 
-## Comprehensive Observability Strategy
+**Status**: Firebase-Specific
+**Last Updated**: 2025-11-18
+**Core Principles**: See [../../core/operations/monitoring-principles.md](../../core/operations/monitoring-principles.md)
 
-When implementing monitoring and observability for this Firebase application, follow these well-architected patterns for visibility, alerting, and performance optimization on a budget. **For zero-cost monitoring**, see `finops-free-tier-maximization.md` for free monitoring services and alerting strategies.
+## Overview
+
+Firebase-specific monitoring implementation using Firebase Performance Monitoring, Firebase Analytics, Cloud Logging, and free-tier monitoring services.
+
+For universal monitoring principles, see the [Core Monitoring Principles](../../core/operations/monitoring-principles.md) guide.
+
+---
+
+## Firebase Observability Strategy
+
+When implementing monitoring and observability for this Firebase application, follow these patterns for visibility, alerting, and performance optimization. **For zero-cost monitoring**, see [firebase-finops.md](./firebase-finops.md) for free monitoring strategies.
 
 > 📊 **Free-First Monitoring**: Use UptimeRobot, Discord webhooks, and GitHub Actions for comprehensive monitoring without cost.
 

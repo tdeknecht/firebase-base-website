@@ -1,6 +1,18 @@
-# Platform Simplification Prompt for Firebase Applications
+# Firebase Platform Simplification Guide
 
-## Simplified Operational Management Strategy
+**Status**: Firebase-Specific
+**Last Updated**: 2025-11-18
+**Core Principles**: See [../../core/operations/platform-simplification-principles.md](../../core/operations/platform-simplification-principles.md)
+
+## Overview
+
+Firebase-specific implementation of platform simplification using Firebase + GitHub as the primary stack.
+
+For universal platform simplification principles, see the [Core Platform Simplification Principles](../../core/operations/platform-simplification-principles.md) guide.
+
+---
+
+## Firebase Simplified Operational Strategy
 
 When maintaining Firebase applications, prioritize operational simplicity to reduce complexity, minimize platform dependencies, and ease long-term maintenance burden.
 

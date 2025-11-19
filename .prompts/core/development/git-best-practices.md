@@ -494,9 +494,66 @@ Before committing, ask:
 
 ---
 
+## Branch Protection Policies
+
+**CRITICAL**: This project uses branch protection on `main` to ensure code quality and prevent accidental changes.
+
+### Protected Branch Rules
+
+**main branch is protected:**
+- ❌ **NO direct commits to main**
+- ❌ **NO direct merges to main** (via `git merge`)
+- ❌ **NO force pushes to main**
+- ✅ **ALL changes must go through Pull Requests**
+- ✅ **Pull Requests require review and approval**
+- ✅ **Status checks must pass before merge**
+
+### Why Branch Protection Matters
+
+**Prevents accidents:**
+- Protects production code from untested changes
+- Prevents accidental overwrites or deletions
+- Ensures all code is reviewed before merging
+
+**Enforces quality:**
+- Requires CI/CD checks to pass
+- Requires peer review
+- Maintains clean, linear history
+
+**Enables collaboration:**
+- Clear review and approval process
+- Discussion and feedback on changes
+- Traceable decision-making
+
+### How to Work With Protected Branches
+
+**Always use feature branches:**
+```bash
+# ✅ Correct workflow
+git checkout main
+git pull origin main
+git checkout -b feat/my-feature
+# ... make changes ...
+git push -u origin feat/my-feature
+# Create PR via GitHub UI
+```
+
+**Never try to merge directly:**
+```bash
+# ❌ WRONG - Will be rejected by branch protection
+git checkout main
+git merge feat/my-feature  # This will fail!
+git push origin main       # Branch protection prevents this
+
+# ✅ CORRECT - Use Pull Requests
+# Merge happens via GitHub UI after approval
+```
+
+---
+
 ## Git Workflow Patterns
 
-### Feature Branch Workflow
+### Feature Branch Workflow (With Branch Protection)
 
 ```bash
 # 1. Start from main branch
@@ -520,12 +577,23 @@ git commit -m "docs: document Google sign-in setup"
 git push -u origin feat/google-oauth-integration
 
 # 5. Create pull request for review
-# (Done via GitHub/GitLab UI)
+# Go to GitHub UI and create PR from feat/google-oauth-integration to main
+# - Fill out PR template
+# - Request reviewers
+# - Link related issues
 
-# 6. After approval, merge via PR
-# (Preferably squash merge for clean history on main)
+# 6. Address review feedback (if any)
+# Make additional commits based on review comments
+git add src/js/modules/auth.js
+git commit -m "fix(auth): address PR feedback on error handling"
+git push origin feat/google-oauth-integration
 
-# 7. Clean up
+# 7. After PR approval and CI passes, merge via GitHub UI
+# - Choose merge strategy (squash, merge commit, or rebase)
+# - Click "Merge pull request" button
+# - Delete branch via GitHub UI
+
+# 8. Clean up local branch
 git checkout main
 git pull origin main
 git branch -d feat/google-oauth-integration
@@ -559,16 +627,26 @@ git push origin v1.0.1
 ### When to Merge
 
 **Use merge when:**
-- Integrating feature branches into main
+- Integrating feature branches into main (via Pull Request)
 - Preserving complete branch history is important
 - Working on shared/collaborative branches
 - Creating explicit merge commits for tracking
 
+**IMPORTANT**: Merges to protected branches (like `main`) **MUST** happen via Pull Request, not via git commands:
+
 ```bash
-# Merge feature branch into main
+# ❌ WRONG - Direct merge to main (blocked by branch protection)
 git checkout main
 git merge feat/new-feature --no-ff
-# --no-ff creates a merge commit even if fast-forward is possible
+
+# ✅ CORRECT - Merge via Pull Request
+# 1. Push feature branch
+git push -u origin feat/new-feature
+
+# 2. Create PR via GitHub UI
+
+# 3. After approval, merge via GitHub's "Merge pull request" button
+# GitHub will perform the merge on the server
 ```
 
 ### When to Rebase
@@ -591,14 +669,20 @@ git rebase -i HEAD~3
 
 ### ⚠️ Never Rebase Public Branches
 
+**CRITICAL**: Never rebase `main` or other shared branches. Always use Pull Requests for integrating changes.
+
 ```bash
 # ❌ NEVER do this on main/shared branches
 git checkout main
 git rebase feat/my-feature  # DON'T!
 
-# ✅ Always use merge for public branches
+# ❌ ALSO WRONG - Direct merge blocked by branch protection
 git checkout main
-git merge feat/my-feature
+git merge feat/my-feature  # Branch protection will prevent this!
+
+# ✅ CORRECT - Use Pull Requests for all changes to main
+git push origin feat/my-feature
+# Then create PR via GitHub UI and merge after approval
 ```
 
 ---
